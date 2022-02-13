@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 
 async function scrape(monthScrape) {
-  /*   const chromeOptions = {
-        headless: false,
+     const chromeOptions = {
+        headless: true,
         defaultViewport: null,
         args: [
             "--incognito",
@@ -10,9 +10,9 @@ async function scrape(monthScrape) {
             "--single-process",
             "--no-zygote"
         ],
-    }; */
+    }; 
     console.log("ddddd", monthScrape);
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch(chromeOptions);
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 })
     await page.goto('https://www.oree.com.ua/index.php/pricectr');
