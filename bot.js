@@ -4,6 +4,10 @@ const { setData, getSheet } = require('./setValues');
 //const getText = require('./convert');
 const getScreen = require('./screen');
 
+require('https').createServer().listen(process.env.PORT || 3000).on('request', function (req, res) {
+    res.end('')
+});
+
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
 if (token === undefined) {
