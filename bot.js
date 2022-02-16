@@ -14,7 +14,14 @@ if (token === undefined) {
     throw new Error('BOT_TOKEN must be provided!')
 }
 
-const bot = new Telegraf(token)
+let bot;
+if (process.env.NODE_ENV === 'production') {
+    bot = new Telegraf(token);
+    bot.setWebHook(process.env.HEROKU_URL + bot.token);
+} else {
+    bot = new Telegraf(token, { polling: true });
+}
+//const bot = new Telegraf(token)
 
 bot.use(Telegraf.log())
 
@@ -47,8 +54,8 @@ bot.hears(/\d+/, ctx => {
         })
     })
 })
-    bot.launch()
+bot.launch()
 
-    // Enable graceful stop
-    process.once('SIGINT', () => bot.stop('SIGINT'))
-    process.once('SIGTERM', () => bot.stop('SIGTERM'))
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
