@@ -17,8 +17,8 @@ if (token === undefined) {
 const bot = new Telegraf(token);
 const URL = process.env.HEROKU_URL;
 const PORT = process.env.PORT || 2000;
-bot.telegram.setWebhook(`${URL}bot${BOT_TOKEN}`);
-bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
+bot.telegram.setWebhook(`${URL}bot${process.env.BOT_TOKEN}`);
+bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, PORT);
 
 /* let bot;
 if (process.env.NODE_ENV === 'production') {
