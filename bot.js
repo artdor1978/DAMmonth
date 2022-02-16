@@ -4,9 +4,9 @@ const { setData, getSheet } = require('./setValues');
 //const getText = require('./convert');
 const getScreen = require('./screen');
 
-require('https').createServer().listen(process.env.PORT || 3000).on('request', function (req, res) {
+/* require('https').createServer().listen(process.env.PORT || 3000).on('request', function (req, res) {
     res.end('')
-});
+}); */
 
 require('dotenv').config()
 const token = process.env.BOT_TOKEN
@@ -14,13 +14,20 @@ if (token === undefined) {
     throw new Error('BOT_TOKEN must be provided!')
 }
 
-let bot;
+const bot = new Telegraf(token);
+const URL = process.env.HEROKU_URL;
+const PORT = process.env.PORT || 2000;
+bot.telegram.setWebhook('${URL}bot${BOT_TOKEN}');
+bot.startWebhook('/bot${BOT_TOKEN}', null, PORT);
+
+/* let bot;
 if (process.env.NODE_ENV === 'production') {
     bot = new Telegraf(token);
     bot.setWebHook(process.env.HEROKU_URL + bot.token);
 } else {
     bot = new Telegraf(token, { polling: true });
-}
+} */
+
 //const bot = new Telegraf(token)
 
 bot.use(Telegraf.log())
